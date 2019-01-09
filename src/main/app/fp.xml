@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8088" doc:name="HTTP Listener Configuration"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="root" database="test" doc:name="MySQL Configuration"/>
+    	
+
+	
+	<flow name="SampleFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/InquiryFP" allowedMethods="POST" doc:name="HTTP" metadata:id="3cb1cb89-2779-4387-85f6-7866f1998fa8"/>
+        <logger message="#[json:UserID]" level="INFO" doc:name="Logger"/>
+        <db:select config-ref="MySQL_Configuration" doc:name="select_user">
+            <db:template-query-ref name="select_user"/>
+        </db:select>
+        <logger message="#[message.payload]" level="INFO" doc:name="Logger"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="2fa6a6ed-91bc-46ec-b45d-6b55e6b62455">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	name: payload.UserID,
+	FirstName: payload.UserName
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <choice-exception-strategy name="Global_Choice_Exception_Strategy">
+        <catch-exception-strategy when="#[exception.causedBy(java.sql.SQLException)]" doc:name="Database Exception Strategy">
+            <set-payload value="Error while hitting the MySQL : Database" doc:name="Set Payload"/>
+            <set-property propertyName="http.status" value="410" doc:name="Property"/>
+            <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        </catch-exception-strategy>
+        <catch-exception-strategy when="#[exception.causedBy(java.lang.IndexOutOfBoundsException)] " logException="false" doc:name="EmptyData Exception Strategy">
+            <set-payload value="Error while data is empty" doc:name="Set Payload"/>
+            <set-property propertyName="http.status" value="410" doc:name="Property"/>
+            <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        </catch-exception-strategy>
+        <catch-exception-strategy doc:name="General Exception Strategy">
+            <set-payload value="General Error" doc:name="Set Payload"/>
+            <set-property propertyName="http.status" value="410" doc:name="Property"/>
+            <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        </catch-exception-strategy>
+    </choice-exception-strategy>
+
+
+
+
+
+
+</mule>
