@@ -1,0 +1,29 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "DbRecord"
+        },
+        "flowVariables": {
+            "ResponseCode": {}
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "Residence"
+        },
+        "flowVariables": {
+            "ResponseMapping": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "Residence"
+            },
+            "ResponseData": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "Residence"
+            }
+        }
+    },
+    "id": "b5d66ba3-7da8-4ec2-846b-5e275ce0e27e",
+    "version": "5.2.0.0"
+}

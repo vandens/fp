@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {},
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "GlobalResponse"
+        }
+    },
+    "id": "65ee8948-f7ef-481a-94e3-c6f94628bf11",
+    "version": "5.2.0.0"
+}

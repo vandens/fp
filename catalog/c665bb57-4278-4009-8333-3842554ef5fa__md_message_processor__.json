@@ -1,0 +1,13 @@
+{
+    "inputMessageMetadata": {
+        "flowVariables": {
+            "GlobalResponse": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "GlobalResponse"
+            }
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "c665bb57-4278-4009-8333-3842554ef5fa",
+    "version": "5.2.0.0"
+}

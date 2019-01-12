@@ -1,0 +1,22 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "Penduduk_FP"
+        },
+        "flowVariables": {
+            "ResponseCode": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "GlobalResponse"
+            }
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "Residence"
+        }
+    },
+    "id": "509c85ab-7177-4545-afb3-a020717a82e9",
+    "version": "5.2.0.0"
+}

@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "Residence"
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "0e98b8c9-8b3a-4de8-b87d-861b18d1d866",
+    "version": "5.2.0.0"
+}
